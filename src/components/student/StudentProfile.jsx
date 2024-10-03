@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUser } from '../../context/userContext'; // Import useUser hook
 
 const StudentProfile = () => {
+  const { user } = useUser(); // Use useUser hook to access user context
   const [profile, setProfile] = useState({
     fullName: '',
     email: '',
@@ -18,10 +20,17 @@ const StudentProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('https://placement-portal-1-n4rt.onrender.com/api/student/profile'); // Adjust the endpoint as needed
+        const userId = user?._id;
+
+        if (!userId) {
+          console.error('User ID is not available');
+          return;
+        }
+
+        const response = await axios.get(`https://placement-portal-1-n4rt.onrender.com/api/student/profile/${userId}`);
+
         if (response.data) {
           setProfile(response.data);
-          console.log(response.data)
           setIsEditing(true);
         }
       } catch (error) {
@@ -30,7 +39,7 @@ const StudentProfile = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,16 +51,26 @@ const StudentProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(profile)
+
     try {
       if (isEditing) {
-        await axios.put('https://placement-portal-1-n4rt.onrender.com/api/student/profile', profile); // Adjust the endpoint as needed
+        // Update profile
+        await axios.put('https://placement-portal-1-n4rt.onrender.com/api/student/profile', {
+          ...profile,
+          userId: user?._id, // Pass userId from user context
+        });
         alert('Profile updated successfully!');
+        setProfile(response.data); // Fixed the alert message
       } else {
-        await axios.post('https://placement-portal-1-n4rt.onrender.com/api/student/profile', profile); // Adjust the endpoint as needed
+        // Create profile
+        await axios.post('https://placement-portal-1-n4rt.onrender.com/api/student/profile', {
+          ...profile,
+          userId: user?._id, // Pass userId from user context
+        });
         alert('Profile created successfully!');
+        setProfile(response.data); 
+        setIsEditing(true);// Fixed the alert message
       }
-      // Optionally redirect or fetch the updated profile
     } catch (error) {
       console.error('Error saving profile:', error);
       alert('Error saving profile. Please try again.');
@@ -94,7 +113,7 @@ const StudentProfile = () => {
             type="date"
             id="dob"
             name="dob"
-            value={profile.dob} // Format to YYYY-MM-DD
+            value={profile.dob}
             onChange={handleChange}
             required
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
@@ -172,59 +191,23 @@ const StudentProfile = () => {
           {isEditing ? 'Update Profile' : 'Create Profile'}
         </button>
       </form>
-     
-     <div>
-  
 
-
-     <div>
-  {profile && (
-    <div>
-      <h1>{profile.fullName}</h1>
-      <p>Email: {profile.email}</p>
-      <p>Date of Birth: {new Date(profile.dob).toLocaleDateString()}</p>
-      <p>10th Percentage: {profile.percentage10th}%</p>
-      <p>12th Percentage: {profile.percentage12th}%</p>
-      <p>College GPA: {profile.collegeGPA}</p>
-      <p>Resume: {profile.resume}</p>
-      <p>Academic Records: {profile.academicRecords}</p>
-      <p>Profile Created At: {new Date(profile.createdAt).toLocaleString()}</p>
-    </div>
-  )}
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-     </div>
-     
-     
-     
+      {/* Display Profile Information */}
+      <div className="mt-10">
+        {profile && (
+          <div>
+            <h3 className="text-xl font-semibold">Profile Information</h3>
+            <p><strong>Full Name:</strong> {profile.fullName}</p>
+            <p><strong>Email:</strong> {profile.email}</p>
+            <p><strong>Date of Birth:</strong> {new Date(profile.dob).toLocaleDateString()}</p>
+            <p><strong>10th Percentage:</strong> {profile.percentage10th}%</p>
+            <p><strong>12th Percentage:</strong> {profile.percentage12th}%</p>
+            <p><strong>College GPA:</strong> {profile.collegeGPA}</p>
+            <p><strong>Resume:</strong> {profile.resume}</p>
+            <p><strong>Academic Records:</strong> {profile.academicRecords}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
