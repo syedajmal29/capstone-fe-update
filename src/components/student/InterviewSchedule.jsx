@@ -9,7 +9,7 @@ const InterviewSchedule = () => {
   useEffect(() => {
     const fetchInterviews = async () => {
       try {
-        const response = await axios.get('https://placement-portal-1-n4rt.onrender.com/api/student/interviews');
+        const response = await axios.get('/api/student/interviews');
         if (Array.isArray(response.data)) {
           setInterviews(response.data);
         } else {
