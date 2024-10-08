@@ -28,6 +28,9 @@ import DashboardLayout from './components/shared/DashboardLayout';
 import { useUser } from "./context/userContext"; 
 import { UserContextProvider } from "./context/userContext";
 import ProtectedRoute from './components/shared/ProtectedRoute'; // Import the ProtectedRoute component
+import UsersList from "./components/admin/UsersList";
+import ApplicationsList from "./components/admin/ApplicationsList";
+import JobManagement from "./components/admin/JobManagement";
 
 function App() {
   const { user } = useUser();
@@ -69,6 +72,10 @@ function App() {
           <Route path="notifications" element={<ProtectedRoute><NotificationComponent /></ProtectedRoute>} />
           <Route path="reports" element={<ProtectedRoute><ReportsDashboard /></ProtectedRoute>} />
           <Route path="charts" element={<ProtectedRoute><ChartComponent /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute><UsersList/></ProtectedRoute>}/>
+          <Route path="/admin/applications" element={<ProtectedRoute><ApplicationsList/></ProtectedRoute>}/>
+          <Route path="/admin/jobs" element={<ProtectedRoute><JobManagement/></ProtectedRoute>}/>
+          
         </Route>
 
         {/* Redirect to dashboard if user is logged in */}
