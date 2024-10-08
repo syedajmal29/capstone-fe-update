@@ -16,15 +16,15 @@ const DashboardLayout = ({ type }) => {
     ],
     admin: [
       { name: 'Dashboard', path: '/admin/dashboard' },
-      { name: 'Manage Placement Drives', path: '/admin/placement-drives' },
-      { name: 'Recruitment Status', path: '/admin/recruitment-status' },
-      { name: 'Placement Drive Form', path: '/admin/placement-drives/new' },
-      { name: 'Interview Scheduler', path: '/admin/interview-scheduler' },
-      { name: 'Placement Drive Details', path: '/admin/placement-drives/:id' },
-      { name: 'Interview List', path: '/admin/interview-list' },
-      { name: 'Notifications', path: '/admin/notifications' },
-      { name: 'Reports', path: '/admin/reports' },
-      { name: 'Charts', path: '/admin/charts' }
+      // { name: 'Manage Placement Drives', path: '/admin/placement-drives' },
+      // { name: 'Recruitment Status', path: '/admin/recruitment-status' },
+      // { name: 'Placement Drive Form', path: '/admin/placement-drives/new' },
+      // { name: 'Interview Scheduler', path: '/admin/interview-scheduler' },
+      // { name: 'Placement Drive Details', path: '/admin/placement-drives/:id' },
+      // { name: 'Interview List', path: '/admin/interview-list' },
+      // { name: 'Notifications', path: '/admin/notifications' },
+      // { name: 'Reports', path: '/admin/reports' },
+      // { name: 'Charts', path: '/admin/charts' }
     ],
     company: [
       { name: 'Dashboard', path: '/company/dashboard' },
