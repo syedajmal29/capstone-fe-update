@@ -11,19 +11,19 @@ const AdminDashboard = () => {
   const [totalusers, settotalusers] = useState([]);
   async function applications() {
     const response = await axios.get(
-      "http://localhost:5000/student-application"
+      "https://placement-portal-1-n4rt.onrender.com/student-application"
     );
     console.log(response);
     settotalapplications(response.data.length);
   }
   async function jobs() {
-    const response = await axios.get("http://localhost:5000/posted-jobs");
+    const response = await axios.get("https://placement-portal-1-n4rt.onrender.com/posted-jobs");
     console.log(response);
     settotaljobs(response.data.length);
   }
 
   async function users() {
-    const response = await axios.get("http://localhost:5000/users-admin");
+    const response = await axios.get("https://placement-portal-1-n4rt.onrender.com/users-admin");
     console.log(response);
     settotalusers(response.data.length);
   }
